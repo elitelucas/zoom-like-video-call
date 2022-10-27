@@ -19,6 +19,7 @@ import fullscreen from "./Icons/fullscreen.svg";
 import minimize from "./Icons/minimize.svg";
 import ringtone from "./Sounds/ringtone.wav";
 import message from "./Sounds/message.mp3";
+import emojis from "./Components/emoji.json";
 
 const Watermark = React.lazy(() => import("./Components/Watermark/Watermark"));
 
@@ -62,64 +63,6 @@ function App() {
   const chatinputRef = useRef(null);
   const [messages, setMessages] = useState([]);
   const [showEmojiBox, setShowEmojiBox] = useState(false);
-  let emojis = [
-    "🙂",
-    "😀",
-    "😃",
-    "😄",
-    "😁",
-    "😅",
-    "😆",
-    "🤣",
-    "😂",
-    "🙃",
-    "😉",
-    "😊",
-    "😇",
-    "😎",
-    "🤓",
-    "🧐",
-    "🥳",
-    "🥰",
-    "😍",
-    "🤩",
-    "😘",
-    "😗",
-    "😚",
-    "😙",
-    "😋",
-    "😛",
-    "😜",
-    "🤪",
-    "😝",
-    "🤑",
-    "🤗",
-    "🤭",
-    "🤫",
-    "🤔",
-    "😐",
-    "🤐",
-    "🤨",
-    "😑",
-    "😶",
-    "😏",
-    "😒",
-    "🙄",
-    "😬",
-    "🤥",
-    "😪",
-    "😴",
-    "😌",
-    "😔",
-    "🤤",
-    "😷",
-    "🤒",
-    "🤕",
-    "🤢",
-    "🤮",
-    "🤧",
-    "🥵",
-  ];
 
   useEffect(() => {
     chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
