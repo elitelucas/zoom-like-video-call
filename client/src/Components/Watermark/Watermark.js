@@ -1,11 +1,11 @@
 import React from 'react'
-import cuckoologo from '../../Icons/gamebop-logo.png'
+import gameboklogo from '../../Icons/gamebop-logo.png'
 import './Watermark.css'
 
 function Watermark(){
     return (
         <div className="watermark">
-            <img className="logoImage" src={cuckoologo} alt="Cuckoo Logo"/>
+            <img className="logoImage" src={gameboklogo} alt="Gamebop Logo"/>
             <span className="logoText">Gamebop</span>
         </div>
     )

@@ -17,13 +17,20 @@ import share from "./Icons/share.svg";
 import hangup from "./Icons/hang-up.svg";
 import fullscreen from "./Icons/fullscreen.svg";
 import minimize from "./Icons/minimize.svg";
-import ringtone from "./Sounds/ringtone.mp3";
+import ringtone from "./Sounds/ringtone.wav";
+import message from "./Sounds/message.mp3";
 
 const Watermark = React.lazy(() => import("./Components/Watermark/Watermark"));
 
 const ringtoneSound = new Howl({
   src: [ringtone],
   loop: true,
+  preload: true,
+});
+
+const messageSound = new Howl({
+  src: [message],
+  loop: false,
   preload: true,
 });
 
@@ -587,6 +594,7 @@ function App() {
 
   const handleReceiveMessage = (text) => {
     console.log("received", text);
+    messageSound.play();
     setMessages((prev) => {
       return [
         ...prev,
@@ -625,7 +633,15 @@ function App() {
         </Suspense>
 
         <div class="split_left">
-          <div className="partnerVideoContainer">{PartnerVideo}</div>
+          <div className="partnerVideoContainer">
+            {callAccepted ? (
+              PartnerVideo
+            ) : (
+              <div className="waitingText">
+                <h1>Please hold for a while to accept your call.</h1>
+              </div>
+            )}
+          </div>
         </div>
 
         <div class="split_right">

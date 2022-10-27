@@ -330,6 +330,7 @@ body {
   padding: var(--site-margin);
   justify-content: space-between;
   animation: callAnimation 2s infinite ease-in-out;
+  font-size: 23px;
 }
 
 @keyframes callAnimation {
@@ -353,6 +354,7 @@ body {
 .incomingCallButtons {
   justify-content: space-between;
   margin-top: var(--spacing-unit);
+  font-size: ;
 }
 
 .callContainer {
@@ -434,10 +436,10 @@ body {
   height: auto;
 }
 
-/* override */
+/* layout */
 .split_left {
   height: 100%;
-  width: 70%;
+  width: 80%;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -447,14 +449,18 @@ body {
 
 .split_right {
   height: 100%;
-  width: 30%;
+  width: 20%;
   position: fixed;
   z-index: 1;
   top: 0;
   overflow-x: hidden;
   right: 0;
 }
-
+.waitingText {
+  width: 100%;
+  text-align: center;
+  padding-top: 50px;
+}
 /* chatbox */
 body,
 html {
@@ -596,7 +602,8 @@ html {
   box-sizing: border-box;
   padding: 0.5rem 1rem;
   margin: 1rem;
-  background: #fff;
+  background: #333;
+  color: rgb(212, 212, 212);
   border-radius: 1.125rem 1.125rem 1.125rem 0;
   min-height: 2.25rem;
   width: -webkit-fit-content;
@@ -609,8 +616,8 @@ html {
 .chat .messages .message.parker {
   margin: 1rem 1rem 1rem auto;
   border-radius: 1.125rem 1.125rem 0 1.125rem;
-  background: #333;
-  color: white;
+  background: #d2d2d2;
+  color: rgb(36, 36, 36);
 }
 .chat .messages .message .typing {
   display: inline-block;
@@ -639,7 +646,7 @@ html {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  padding: 0 0.5rem 0 1.5rem;
+  padding: 0 0.5rem 0 10px;
   background-color: lightgray;
 }
 .chat .input i {
