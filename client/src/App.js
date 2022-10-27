@@ -52,7 +52,67 @@ function App() {
 
   // texchat
   const chatboxRef = useRef(null);
+  const chatinputRef = useRef(null);
   const [messages, setMessages] = useState([]);
+  const [showEmojiBox, setShowEmojiBox] = useState(false);
+  let emojis = [
+    "🙂",
+    "😀",
+    "😃",
+    "😄",
+    "😁",
+    "😅",
+    "😆",
+    "🤣",
+    "😂",
+    "🙃",
+    "😉",
+    "😊",
+    "😇",
+    "😎",
+    "🤓",
+    "🧐",
+    "🥳",
+    "🥰",
+    "😍",
+    "🤩",
+    "😘",
+    "😗",
+    "😚",
+    "😙",
+    "😋",
+    "😛",
+    "😜",
+    "🤪",
+    "😝",
+    "🤑",
+    "🤗",
+    "🤭",
+    "🤫",
+    "🤔",
+    "😐",
+    "🤐",
+    "🤨",
+    "😑",
+    "😶",
+    "😏",
+    "😒",
+    "🙄",
+    "😬",
+    "🤥",
+    "😪",
+    "😴",
+    "😌",
+    "😔",
+    "🤤",
+    "😷",
+    "🤒",
+    "🤕",
+    "🤢",
+    "🤮",
+    "🤧",
+    "🥵",
+  ];
 
   useEffect(() => {
     chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
@@ -515,6 +575,16 @@ function App() {
     }
   };
 
+  const handleToggleEmoji = () => {
+    setShowEmojiBox((prev) => {
+      return !prev;
+    });
+  };
+
+  const handleClickEmoji = (emoji) => {
+    chatinputRef.current.value += emoji;
+  };
+
   const handleReceiveMessage = (text) => {
     console.log("received", text);
     setMessages((prev) => {
@@ -578,11 +648,38 @@ function App() {
                   </div> */}
               </div>
               <div class="input">
-                <i class="fa fa-save">😃</i>
+                {showEmojiBox ? (
+                  <i onClick={handleToggleEmoji}>🔻</i>
+                ) : (
+                  <i onClick={handleToggleEmoji}>😃</i>
+                )}
+                <div style={{ display: showEmojiBox ? "block" : "none" }}>
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "70px",
+                      left: "5px",
+                    }}
+                  >
+                    <div class="grid-container">
+                      {emojis.map((emoji) => {
+                        return (
+                          <div
+                            class="grid-item"
+                            onClick={() => handleClickEmoji(emoji)}
+                          >
+                            {emoji}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
                 <input
                   placeholder="Type your message here!"
                   type="text"
                   onKeyDown={handleKeyDown}
+                  ref={chatinputRef}
                 />
               </div>
             </div>

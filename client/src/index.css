@@ -649,9 +649,12 @@ html {
   cursor: pointer;
   transition: color 200ms;
   font-style: inherit;
+  line-height: 35px;
+  width: 35px;
 }
 .chat .input i:hover {
   color: #333;
+  background-color: rgb(150, 150, 150);
 }
 .chat .input input {
   border: none;
@@ -716,4 +719,24 @@ html {
 
 .pic.rogers {
   background-image: url("https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/7/7c/Cap.America_%28We_Don%27t_Trade_Lives_Vision%29.png");
+}
+
+/* Emoji box */
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto;
+  background-color: #bdbcbc;
+  padding: 5px;
+  border-radius: 5px;
+}
+.grid-item {
+  padding: 5px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.grid-item:hover {
+  background-color: #b9abab;
 }
