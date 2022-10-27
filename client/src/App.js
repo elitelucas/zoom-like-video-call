@@ -17,7 +17,7 @@ import share from "./Icons/share.svg";
 import hangup from "./Icons/hang-up.svg";
 import fullscreen from "./Icons/fullscreen.svg";
 import minimize from "./Icons/minimize.svg";
-import ringtone from "./Sounds/ringtone.wav";
+import ringtone from "./Sounds/ringtone.mp3";
 import message from "./Sounds/message.mp3";
 import emojis from "./Components/emoji.json";
 
