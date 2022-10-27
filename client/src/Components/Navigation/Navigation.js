@@ -1,6 +1,5 @@
 import React from 'react'
 import logo from '../../Icons/gamebop-logo.png'
-import GitHubButton from 'react-github-btn'
 import '../Navigation/Navigation.css'
 
 const Navigation = () => {

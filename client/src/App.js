@@ -50,17 +50,28 @@ function App() {
   const socket = useRef();
   const myPeer = useRef();
 
+  // texchat
+  const chatboxRef = useRef(null);
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
+  }, [messages]);
+  let devenv = false;
+
   let landingHTML = (
     <>
       <Navigation />
-      <main>
+      <main style={{ minHeight: "calc(100% - 302px)" }}>
         <div className="u-margin-top-xxlarge u-margin-bottom-xxlarge">
           <div className="o-wrapper-l">
             <div className="hero flex flex-column">
               <div>
                 <div className="welcomeText">Video + Voice + Text Calls</div>
-                <div className="descriptionText">across the Gamebop group for free</div>
-              </div>             
+                <div className="descriptionText">
+                  across the Gamebop group for free
+                </div>
+              </div>
               <div className="callBox flex">
                 <input
                   type="text"
@@ -76,20 +87,19 @@ function App() {
                   Call
                 </button>
               </div>
-              <div className="actionText">    
-                Send your username ( <span
-                    className={
-                      copied
-                        ? "username highlight copied"
-                        : "username highlight"
-                    }
-                    onClick={() => {
-                      showCopiedMessage();
-                    }}
-                  >
-                    {yourID}
-                  </span>)
-                and wait for their call{" "}
+              <div className="actionText">
+                Send your username ({" "}
+                <span
+                  className={
+                    copied ? "username highlight copied" : "username highlight"
+                  }
+                  onClick={() => {
+                    showCopiedMessage();
+                  }}
+                >
+                  {yourID}
+                </span>
+                ) and wait for their call{" "}
                 <span style={{ fontWeight: 600 }}>OR</span> enter their username
                 and hit call!
               </div>
@@ -116,6 +126,10 @@ function App() {
       ringtoneSound.play();
       setCaller(data.from);
       setCallerSignal(data.signal);
+    });
+
+    socket.current.on("receiveMessage", (text) => {
+      handleReceiveMessage(text);
     });
   }, []);
 
@@ -325,13 +339,13 @@ function App() {
   }
 
   function renderLanding() {
-    // return "none";
+    if (devenv) return "none";
     if (!callRejected && !callAccepted && !callingFriend) return "block";
     return "none";
   }
 
   function renderCall() {
-    // return "block";
+    if (devenv) return "block";
     if (!callRejected && !callAccepted && !callingFriend) return "none";
     return "block";
   }
@@ -482,9 +496,46 @@ function App() {
     );
   }
 
+  //text chat , input
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      console.log("on Enterkey", event.target.value);
+      setMessages([
+        ...messages,
+        {
+          isMe: true,
+          text: event.target.value,
+        },
+      ]);
+      socket.current.emit("sendMessage", {
+        to: caller,
+        text: event.target.value,
+      });
+      event.target.value = "";
+    }
+  };
+
+  const handleReceiveMessage = (text) => {
+    console.log("received", text);
+    setMessages((prev) => {
+      return [
+        ...prev,
+        {
+          isMe: false,
+          text: text,
+        },
+      ];
+    });
+  };
+
   return (
     <>
-      <div style={{ display: renderLanding() }}>
+      <div
+        style={{
+          display: renderLanding(),
+          height: "100vh",
+        }}
+      >
         {landingHTML}
         <Rodal
           visible={modalVisible}
@@ -502,7 +553,42 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Watermark />
         </Suspense>
-        <div className="partnerVideoContainer">{PartnerVideo}</div>
+
+        <div class="split_left">
+          <div className="partnerVideoContainer">{PartnerVideo}</div>
+        </div>
+
+        <div class="split_right">
+          <div className="textChatContainer">
+            <div class="chat">
+              <div
+                class="messages"
+                id="chat"
+                ref={chatboxRef}
+                style={{ scrollBehavior: "smooth" }}
+              >
+                {messages.map((message, i) => {
+                  var cn = message.isMe ? "parker" : "stark";
+                  return <div class={`message ${cn}`}>{message.text}</div>;
+                })}
+                {/* <div class="message stark">
+                    <div class="typing typing-1"></div>
+                    <div class="typing typing-2"></div>
+                    <div class="typing typing-3"></div>
+                  </div> */}
+              </div>
+              <div class="input">
+                <i class="fa fa-save">😃</i>
+                <input
+                  placeholder="Type your message here!"
+                  type="text"
+                  onKeyDown={handleKeyDown}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="userVideoContainer">{UserVideo}</div>
         <div className="controlsContainer flex">
           {audioControl}
