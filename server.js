@@ -18,6 +18,7 @@ const users = {};
 io.on("connection", (socket) => {
   //generate username against a socket connection and store it
   const userid = username.generateUsername("-");
+  console.log(userid)
   if (!users[userid]) {
     users[userid] = socket.id;
   }

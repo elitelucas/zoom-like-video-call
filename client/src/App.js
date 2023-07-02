@@ -125,6 +125,7 @@ function App() {
     socket.current = io.connect("/");
 
     socket.current.on("yourID", (id) => {
+      alert(id)
       setYourID(id);
     });
     socket.current.on("allUsers", (users) => {
